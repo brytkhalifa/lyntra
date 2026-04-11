@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
-import { Link2, Pencil, Plus, Trash2 } from 'lucide-vue-next';
+import { BarChart3, Link2, Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import {
     create as linksCreate,
     edit as linksEdit,
     destroy as linksDestroy,
+    show as linksShow,
 } from '@/routes/links';
 
 type Row = {
@@ -141,6 +142,12 @@ defineOptions({
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center justify-end gap-1">
+                                    <Button variant="ghost" size="icon" as-child>
+                                        <Link :href="linksShow(row.id)">
+                                            <span class="sr-only">Analytics</span>
+                                            <BarChart3 class="size-4" />
+                                        </Link>
+                                    </Button>
                                     <Button variant="ghost" size="icon" as-child>
                                         <Link :href="linksEdit(row.id)">
                                             <span class="sr-only">Edit</span>
