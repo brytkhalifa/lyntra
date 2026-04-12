@@ -40,7 +40,11 @@ const segments = computed(() => {
     const rows = props.rows.filter((r) => r.count > 0);
 
     if (rows.length === 0) {
-        return { labels: [] as string[], data: [] as number[], colors: [] as string[] };
+        return {
+            labels: [] as string[],
+            data: [] as number[],
+            colors: [] as string[],
+        };
     }
 
     const max = props.maxSegments;
@@ -49,8 +53,11 @@ const segments = computed(() => {
         return {
             labels: rows.map((r) => r.label),
             data: rows.map((r) => r.count),
-            colors: rows.map(
-                (_, i) => cssVar(chartPalette[i % chartPalette.length], 'hsl(220 70% 50%)'),
+            colors: rows.map((_, i) =>
+                cssVar(
+                    chartPalette[i % chartPalette.length],
+                    'hsl(220 70% 50%)',
+                ),
             ),
         };
     }
@@ -64,7 +71,10 @@ const segments = computed(() => {
         data: [...head.map((r) => r.count), otherCount],
         colors: [
             ...head.map((_, i) =>
-                cssVar(chartPalette[i % chartPalette.length], 'hsl(220 70% 50%)'),
+                cssVar(
+                    chartPalette[i % chartPalette.length],
+                    'hsl(220 70% 50%)',
+                ),
             ),
             cssVar('--muted-foreground', 'hsl(0 0% 45%)'),
         ],
@@ -133,8 +143,13 @@ async function draw(): Promise<void> {
         return;
     }
 
-    const { Chart: ChartCtor, ArcElement, DoughnutController, Legend, Tooltip } =
-        await import('chart.js');
+    const {
+        Chart: ChartCtor,
+        ArcElement,
+        DoughnutController,
+        Legend,
+        Tooltip,
+    } = await import('chart.js');
 
     ChartCtor.register(DoughnutController, ArcElement, Tooltip, Legend);
 

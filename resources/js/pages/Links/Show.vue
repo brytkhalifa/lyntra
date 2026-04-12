@@ -5,6 +5,7 @@ import { computed } from 'vue';
 import LinkBreakdownDonutChart from '@/components/analytics/LinkBreakdownDonutChart.vue';
 import LinkClicksDayChart from '@/components/analytics/LinkClicksDayChart.vue';
 import Heading from '@/components/Heading.vue';
+import ShortLinkQrMenu from '@/components/links/ShortLinkQrMenu.vue';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -103,15 +104,18 @@ defineOptions({
                     "
                 />
             </div>
-            <Button variant="outline" size="sm" as-child>
-                <a
-                    :href="shortLink.short_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Open short URL
-                </a>
-            </Button>
+            <div class="flex flex-wrap items-center gap-2">
+                <ShortLinkQrMenu :link-id="shortLink.id" trigger="button" />
+                <Button variant="outline" size="sm" as-child>
+                    <a
+                        :href="shortLink.short_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open short URL
+                    </a>
+                </Button>
+            </div>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -276,7 +280,9 @@ defineOptions({
             <CardContent class="space-y-4">
                 <LinkBreakdownDonutChart
                     :rows="
-                        analytics.by_country.filter((x) => x.label !== 'Unknown')
+                        analytics.by_country.filter(
+                            (x) => x.label !== 'Unknown',
+                        )
                     "
                 />
                 <table class="w-full max-w-md text-left text-sm">

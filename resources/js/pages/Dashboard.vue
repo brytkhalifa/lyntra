@@ -251,12 +251,16 @@ defineOptions({
                                         {{ row.destination_url }}
                                     </td>
                                     <td
-                                        class="py-2 text-right tabular-nums text-muted-foreground"
+                                        class="py-2 text-right text-muted-foreground tabular-nums"
                                     >
                                         {{ row.clicks_count }}
                                     </td>
                                     <td class="py-2 pl-2">
-                                        <Button variant="ghost" size="sm" as-child>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            as-child
+                                        >
                                             <Link :href="linksShow(row.id)">
                                                 Analytics
                                             </Link>
@@ -282,7 +286,9 @@ defineOptions({
                                     <th class="py-2 pr-3 font-medium">
                                         Short URL
                                     </th>
-                                    <th class="py-2 pr-3 font-medium">Created</th>
+                                    <th class="py-2 pr-3 font-medium">
+                                        Created
+                                    </th>
                                     <th class="py-2 text-right font-medium">
                                         Clicks
                                     </th>
@@ -314,12 +320,16 @@ defineOptions({
                                         {{ formatCreatedAt(row.created_at) }}
                                     </td>
                                     <td
-                                        class="py-2 text-right tabular-nums text-muted-foreground"
+                                        class="py-2 text-right text-muted-foreground tabular-nums"
                                     >
                                         {{ row.clicks_count }}
                                     </td>
                                     <td class="py-2 pl-2">
-                                        <Button variant="ghost" size="sm" as-child>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            as-child
+                                        >
                                             <Link :href="linksShow(row.id)">
                                                 Analytics
                                             </Link>

@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import {
-    FolderGit2,
-    LayoutGrid,
-    Link2,
-    UnfoldVertical,
-} from 'lucide-vue-next';
+import { FolderGit2, LayoutGrid, Link2, UnfoldVertical } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';

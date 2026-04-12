@@ -9,6 +9,7 @@ import {
     UnfoldVertical,
 } from 'lucide-vue-next';
 import Heading from '@/components/Heading.vue';
+import ShortLinkQrMenu from '@/components/links/ShortLinkQrMenu.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
@@ -181,6 +182,7 @@ defineOptions({
                                             <BarChart3 class="size-4" />
                                         </Link>
                                     </Button>
+                                    <ShortLinkQrMenu :link-id="row.id" />
                                     <Button
                                         variant="ghost"
                                         size="icon"

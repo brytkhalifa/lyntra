@@ -1,10 +1,10 @@
 # Lyntra
 
-Lyntra is a URL shortener built with **Laravel**, **Inertia.js**, and **Vue 3**. Authenticated users can create short links, view a dashboard with aggregate metrics, inspect per-link analytics (clicks over time and device breakdowns), and resolve external short URLs safely via the expand tool.
+Lyntra is a URL shortener built with **Laravel**, **Inertia.js**, and **Vue 3**. Authenticated users can create short links, view a dashboard with aggregate metrics, inspect per-link analytics (clicks over time and device breakdowns), open the **QR code** menu on each link to **view** (SVG in a new tab) or **download** PNG, and resolve external short URLs safely via the expand tool. The QR endpoint also accepts `?format=svg` and `?inline=1` for inline display.
 
 ## Requirements
 
-- PHP **8.3+** with common extensions (`pdo`, `openssl`, `mbstring`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`)
+- PHP **8.3+** with common extensions (`pdo`, `openssl`, `mbstring`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`). For **PNG** QR output, enable the **GD** extension; **SVG** QR (`?format=svg`) does not require GD.
 - [Composer](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/) and npm
 
@@ -45,6 +45,12 @@ Or run pieces separately, for example:
 ```bash
 php artisan serve
 npm run dev
+```
+
+After changing Laravel routes, regenerate typed route helpers (include form bindings used by Inertia):
+
+```bash
+php artisan wayfinder:generate --with-form --no-interaction
 ```
 
 ## Testing and quality

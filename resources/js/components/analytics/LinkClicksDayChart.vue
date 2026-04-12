@@ -128,7 +128,10 @@ async function draw(): Promise<void> {
         Tooltip,
     );
 
-    chart = new ChartCtor(canvasRef.value, buildConfig(props.days)) as Chart<'bar'>;
+    chart = new ChartCtor(
+        canvasRef.value,
+        buildConfig(props.days),
+    ) as Chart<'bar'>;
 }
 
 onMounted(() => {
@@ -151,7 +154,11 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="relative h-56 w-full min-w-0 sm:h-64">
-        <canvas v-if="days.length > 0" ref="canvasRef" class="max-h-full w-full" />
+        <canvas
+            v-if="days.length > 0"
+            ref="canvasRef"
+            class="max-h-full w-full"
+        />
         <p
             v-else
             class="flex h-full items-center justify-center text-sm text-muted-foreground"

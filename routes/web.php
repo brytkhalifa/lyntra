@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ShortLinks\RedirectShortLinkController;
 use App\Http\Controllers\ShortLinks\ResolveShortUrlController;
 use App\Http\Controllers\ShortLinks\ShortLinkController;
+use App\Http\Controllers\ShortLinks\ShortLinkQrCodeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -20,6 +21,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('links/expand', ResolveShortUrlController::class)
         ->name('links.expand.submit')
         ->middleware('throttle:30,1');
+
+    Route::get('links/{link}/qr', ShortLinkQrCodeController::class)
+        ->name('links.qr')
+        ->middleware('throttle:60,1');
 
     Route::resource('links', ShortLinkController::class);
 });

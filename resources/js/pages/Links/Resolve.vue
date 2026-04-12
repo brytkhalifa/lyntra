@@ -110,7 +110,10 @@ defineOptions({
                 <InputError :message="urlFieldError" />
             </div>
 
-            <Button type="submit" :disabled="http.processing || !http.url.trim()">
+            <Button
+                type="submit"
+                :disabled="http.processing || !http.url.trim()"
+            >
                 <Loader2
                     v-if="http.processing"
                     class="mr-2 size-4 animate-spin"
@@ -141,13 +144,13 @@ defineOptions({
                 class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground"
             >
                 <div>
-                    <dt class="inline font-medium">Source: </dt>
+                    <dt class="inline font-medium">Source:</dt>
                     <dd class="inline">
                         {{ wasInternal ? 'Lyntra' : 'External' }}
                     </dd>
                 </div>
                 <div v-if="redirectCount !== null">
-                    <dt class="inline font-medium">Redirects: </dt>
+                    <dt class="inline font-medium">Redirects:</dt>
                     <dd class="inline">{{ redirectCount }}</dd>
                 </div>
             </dl>
