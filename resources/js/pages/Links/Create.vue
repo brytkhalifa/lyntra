@@ -12,6 +12,15 @@ import {
     store,
 } from '@/routes/links';
 
+const props = withDefaults(
+    defineProps<{
+        prefill_destination_url?: string | null;
+    }>(),
+    {
+        prefill_destination_url: null,
+    },
+);
+
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -49,6 +58,7 @@ defineOptions({
                     required
                     autocomplete="off"
                     placeholder="https://example.com/page"
+                    :default-value="props.prefill_destination_url ?? undefined"
                 />
                 <InputError :message="errors.destination_url" />
             </div>

@@ -11,6 +11,7 @@ use App\Support\UniqueShortSlug;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -79,7 +80,9 @@ class ShortLinkController extends Controller
     {
         $this->authorize('create', ShortLink::class);
 
-        return Inertia::render('Links/Create');
+        return Inertia::render('Links/Create', [
+            'prefill_destination_url' => $this->prefillDestinationUrlFromQuery($request),
+        ]);
     }
 
     public function store(StoreShortLinkRequest $request): RedirectResponse
@@ -93,6 +96,33 @@ class ShortLinkController extends Controller
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Link created.')]);
 
         return to_route('links.index');
+    }
+
+    /**
+     * Optional `destination_url` query for the create form (e.g. from the landing page).
+     */
+    private function prefillDestinationUrlFromQuery(Request $request): ?string
+    {
+        if (! $request->has('destination_url')) {
+            return null;
+        }
+
+        $value = $request->query('destination_url');
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = mb_substr(trim($value), 0, 2048);
+        if ($value === '') {
+            return null;
+        }
+
+        $validator = Validator::make(
+            ['destination_url' => $value],
+            ['destination_url' => ['required', 'string', 'max:2048', 'regex:/^https?:\\/\\/.+/i']],
+        );
+
+        return $validator->passes() ? $value : null;
     }
 
     public function edit(Request $request, ShortLink $link): Response

@@ -6,6 +6,7 @@ use App\Models\LinkClick;
 use App\Models\ShortLink;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class ShortLinkPhase1Test extends TestCase
@@ -118,6 +119,42 @@ class ShortLinkPhase1Test extends TestCase
         $this->assertSame('desktop', $click->device_type);
         $this->assertSame('Chrome', $click->browser);
         $this->assertSame('Windows', $click->os);
+    }
+
+    public function test_guest_is_redirected_to_login_when_visiting_create_link_page(): void
+    {
+        $response = $this->get(route('links.create'));
+
+        $response->assertRedirect(route('login'));
+    }
+
+    public function test_create_link_page_prefills_destination_from_valid_query_string(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $url = 'https://example.com/blog/prefilled';
+        $response = $this->get(route('links.create', ['destination_url' => $url]));
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Links/Create')
+            ->where('prefill_destination_url', $url),
+        );
+    }
+
+    public function test_create_link_page_ignores_invalid_destination_query_string(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('links.create', ['destination_url' => 'not-a-valid-url']));
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Links/Create')
+            ->where('prefill_destination_url', null),
+        );
     }
 
     public function test_guest_cannot_store_short_link(): void
