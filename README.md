@@ -63,10 +63,8 @@ That runs ESLint, Prettier, `vue-tsc`, and the full PHPUnit suite (see `composer
 
 Format after edits:
 
-```bash
-vendor/bin/pint --dirty          # PHP (Laravel Pint)
-npm run format                   # JS, Vue, CSS under resources/ (Prettier)
-```
+- **PHP:** `composer lint` runs Laravel Pint with `--parallel` and **rewrites** files (same as formatting the PHP tree). Use `composer lint:check` for a no-write check (`pint --test`). To limit Pint to changed PHP files only, use `vendor/bin/pint --dirty`.
+- **Frontend:** `npm run format` runs Prettier on `resources/` (Vue, JS, CSS). That is separate from Composer; there is no `composer format` script in this project.
 
 ## Optional: click geolocation (MaxMind)
 
