@@ -12,6 +12,14 @@ class ShortLinkPolicy
         return true;
     }
 
+    /**
+     * Expand a pasted short URL to its destination (no click logging).
+     */
+    public function resolve(User $user): bool
+    {
+        return true;
+    }
+
     public function view(User $user, ShortLink $shortLink): bool
     {
         return $user->id === $shortLink->user_id;

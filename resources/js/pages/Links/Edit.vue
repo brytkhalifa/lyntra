@@ -158,13 +158,17 @@ defineOptions({
                         class="size-4 rounded border border-input shadow-xs"
                         :checked="shortLink.is_active"
                     />
-                    <Label for="is_active" class="font-normal">Link is active</Label>
+                    <Label for="is_active" class="font-normal"
+                        >Link is active</Label
+                    >
                 </div>
                 <InputError :message="errors.is_active" />
             </div>
 
             <div class="flex gap-3">
-                <Button type="submit" :disabled="processing">Save changes</Button>
+                <Button type="submit" :disabled="processing"
+                    >Save changes</Button
+                >
                 <Button variant="outline" as-child>
                     <Link :href="linksIndex()">Back</Link>
                 </Button>

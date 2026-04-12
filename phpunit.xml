@@ -32,5 +32,7 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="SHORT_URL_RESOLVER_ENFORCE_DNS" value="false"/>
+        <env name="GEOIP_ENABLED" value="false"/>
     </php>
 </phpunit>

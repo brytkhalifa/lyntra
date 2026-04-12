@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ShortLinks\RedirectShortLinkController;
+use App\Http\Controllers\ShortLinks\ResolveShortUrlController;
 use App\Http\Controllers\ShortLinks\ShortLinkController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -10,7 +12,14 @@ Route::inertia('/', 'Welcome', [
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+    Route::get('links/expand', [ShortLinkController::class, 'expand'])
+        ->name('links.expand');
+
+    Route::post('links/expand', ResolveShortUrlController::class)
+        ->name('links.expand.submit')
+        ->middleware('throttle:30,1');
 
     Route::resource('links', ShortLinkController::class);
 });

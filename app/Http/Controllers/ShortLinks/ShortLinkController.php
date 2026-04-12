@@ -18,6 +18,13 @@ class ShortLinkController extends Controller
 {
     use AuthorizesRequests;
 
+    public function expand(): Response
+    {
+        $this->authorize('resolve', ShortLink::class);
+
+        return Inertia::render('Links/Resolve');
+    }
+
     public function index(Request $request): Response
     {
         $this->authorize('viewAny', ShortLink::class);

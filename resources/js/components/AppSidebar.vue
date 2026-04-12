@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid, Link2 } from 'lucide-vue-next';
+import {
+    BookOpen,
+    FolderGit2,
+    LayoutGrid,
+    Link2,
+    UnfoldVertical,
+} from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,7 +21,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { index as linksIndex } from '@/routes/links';
+import { expand as linksExpand, index as linksIndex } from '@/routes/links';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -28,6 +34,11 @@ const mainNavItems: NavItem[] = [
         title: 'Links',
         href: linksIndex(),
         icon: Link2,
+    },
+    {
+        title: 'Expand link',
+        href: linksExpand.url(),
+        icon: UnfoldVertical,
     },
 ];
 

@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
-import { BarChart3, Link2, Pencil, Plus, Trash2 } from 'lucide-vue-next';
+import {
+    BarChart3,
+    Link2,
+    Pencil,
+    Plus,
+    Trash2,
+    UnfoldVertical,
+} from 'lucide-vue-next';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import {
+    expand as linksExpand,
     index as linksIndex,
     create as linksCreate,
     edit as linksEdit,
@@ -66,12 +74,20 @@ defineOptions({
                 title="Short links"
                 description="Create and manage your public short URLs"
             />
-            <Button as-child>
-                <Link :href="linksCreate()">
-                    <Plus class="mr-2 size-4" />
-                    New link
-                </Link>
-            </Button>
+            <div class="flex flex-wrap gap-2">
+                <Button variant="outline" as-child>
+                    <Link :href="linksExpand.url()">
+                        <UnfoldVertical class="mr-2 size-4" />
+                        Expand link
+                    </Link>
+                </Button>
+                <Button as-child>
+                    <Link :href="linksCreate()">
+                        <Plus class="mr-2 size-4" />
+                        New link
+                    </Link>
+                </Button>
+            </div>
         </div>
 
         <div
@@ -105,15 +121,24 @@ defineOptions({
                             class="border-b border-sidebar-border/50 last:border-0 dark:border-sidebar-border/80"
                         >
                             <td class="px-4 py-3">
-                                <div class="flex items-center gap-2 font-medium">
-                                    <Link2 class="size-4 shrink-0 text-muted-foreground" />
+                                <div
+                                    class="flex items-center gap-2 font-medium"
+                                >
+                                    <Link2
+                                        class="size-4 shrink-0 text-muted-foreground"
+                                    />
                                     <a
                                         :href="row.short_url"
                                         class="text-primary underline-offset-4 hover:underline"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        {{ row.short_url.replace(/^https?:\/\//, '') }}
+                                        {{
+                                            row.short_url.replace(
+                                                /^https?:\/\//,
+                                                '',
+                                            )
+                                        }}
                                     </a>
                                 </div>
                             </td>
@@ -141,14 +166,26 @@ defineOptions({
                                 </span>
                             </td>
                             <td class="px-4 py-3">
-                                <div class="flex items-center justify-end gap-1">
-                                    <Button variant="ghost" size="icon" as-child>
+                                <div
+                                    class="flex items-center justify-end gap-1"
+                                >
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="linksShow(row.id)">
-                                            <span class="sr-only">Analytics</span>
+                                            <span class="sr-only"
+                                                >Analytics</span
+                                            >
                                             <BarChart3 class="size-4" />
                                         </Link>
                                     </Button>
-                                    <Button variant="ghost" size="icon" as-child>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="linksEdit(row.id)">
                                             <span class="sr-only">Edit</span>
                                             <Pencil class="size-4" />

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ShortLinks;
 use App\Http\Controllers\Controller;
 use App\Models\LinkClick;
 use App\Models\ShortLink;
+use App\Support\ClickGeoLocator;
 use App\Support\ShortLinkDestination;
 use App\Support\UserAgentInsights;
 use Illuminate\Http\RedirectResponse;
@@ -29,12 +30,14 @@ class RedirectShortLinkController extends Controller
         $target = ShortLinkDestination::resolved($link, $request);
 
         $insights = UserAgentInsights::fromRequest($request);
+        $geo = ClickGeoLocator::fromClientIp($request->ip());
 
         LinkClick::query()->create([
             'short_link_id' => $link->id,
             'ip_hash' => hash_hmac('sha256', $request->ip() ?? '', (string) config('app.key')),
             'referrer' => $request->headers->get('referer'),
             ...$insights,
+            ...$geo,
             'created_at' => now(),
         ]);
 

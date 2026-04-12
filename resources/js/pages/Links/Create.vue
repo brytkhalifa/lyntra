@@ -6,7 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dashboard } from '@/routes';
-import { index as linksIndex, create as linksCreate, store } from '@/routes/links';
+import {
+    index as linksIndex,
+    create as linksCreate,
+    store,
+} from '@/routes/links';
 
 defineOptions({
     layout: {
@@ -93,22 +97,14 @@ defineOptions({
                 </div>
                 <div class="grid gap-2">
                     <Label for="utm_term">UTM term</Label>
-                    <Input
-                        id="utm_term"
-                        name="utm_term"
-                        autocomplete="off"
-                    />
+                    <Input id="utm_term" name="utm_term" autocomplete="off" />
                     <InputError :message="errors.utm_term" />
                 </div>
             </div>
 
             <div class="grid gap-2">
                 <Label for="utm_content">UTM content</Label>
-                <Input
-                    id="utm_content"
-                    name="utm_content"
-                    autocomplete="off"
-                />
+                <Input id="utm_content" name="utm_content" autocomplete="off" />
                 <InputError :message="errors.utm_content" />
             </div>
 
@@ -133,13 +129,17 @@ defineOptions({
                         checked
                         class="size-4 rounded border border-input shadow-xs"
                     />
-                    <Label for="is_active" class="font-normal">Link is active</Label>
+                    <Label for="is_active" class="font-normal"
+                        >Link is active</Label
+                    >
                 </div>
                 <InputError :message="errors.is_active" />
             </div>
 
             <div class="flex gap-3">
-                <Button type="submit" :disabled="processing">Create link</Button>
+                <Button type="submit" :disabled="processing"
+                    >Create link</Button
+                >
                 <Button variant="outline" as-child>
                     <Link :href="linksIndex()">Cancel</Link>
                 </Button>

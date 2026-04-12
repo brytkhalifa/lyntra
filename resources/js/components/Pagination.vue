@@ -26,12 +26,9 @@ type Props = {
     class?: string;
 };
 
-const props = withDefaults(
-    defineProps<Props>(),
-    {
-        preserveScroll: true,
-    },
-);
+const props = withDefaults(defineProps<Props>(), {
+    preserveScroll: true,
+});
 
 const summary = computed((): string | null => {
     const m = props.meta;

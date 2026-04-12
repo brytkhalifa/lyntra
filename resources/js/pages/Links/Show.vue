@@ -2,7 +2,10 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft, BarChart3 } from 'lucide-vue-next';
 import { computed } from 'vue';
+import LinkBreakdownDonutChart from '@/components/analytics/LinkBreakdownDonutChart.vue';
+import LinkClicksDayChart from '@/components/analytics/LinkClicksDayChart.vue';
 import Heading from '@/components/Heading.vue';
+import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -10,7 +13,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { index as linksIndex } from '@/routes/links';
 
@@ -42,10 +44,7 @@ const props = defineProps<{
 }>();
 
 const maxDayCount = computed(() =>
-    props.analytics.clicks_by_day.reduce(
-        (m, d) => Math.max(m, d.count),
-        0,
-    ),
+    props.analytics.clicks_by_day.reduce((m, d) => Math.max(m, d.count), 0),
 );
 
 function pct(part: number, whole: number): string {
@@ -58,6 +57,7 @@ function pct(part: number, whole: number): string {
 
 function formatDayLabel(isoDate: string): string {
     const d = new Date(isoDate + 'T12:00:00');
+
     return d.toLocaleDateString(undefined, {
         month: 'short',
         day: 'numeric',
@@ -85,7 +85,9 @@ defineOptions({
     <h1 class="sr-only">Link analytics</h1>
 
     <div class="flex flex-col gap-6 p-4">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+        >
             <div class="space-y-1">
                 <Button variant="ghost" size="sm" class="-ml-2 w-fit" as-child>
                     <Link :href="linksIndex()">
@@ -96,7 +98,9 @@ defineOptions({
                 <Heading
                     variant="small"
                     title="Link analytics"
-                    :description="shortLink.short_url.replace(/^https?:\/\//, '')"
+                    :description="
+                        shortLink.short_url.replace(/^https?:\/\//, '')
+                    "
                 />
             </div>
             <Button variant="outline" size="sm" as-child>
@@ -113,7 +117,9 @@ defineOptions({
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Card>
                 <CardHeader class="pb-2">
-                    <CardTitle class="text-sm font-medium text-muted-foreground">
+                    <CardTitle
+                        class="text-sm font-medium text-muted-foreground"
+                    >
                         Total clicks
                     </CardTitle>
                 </CardHeader>
@@ -125,7 +131,9 @@ defineOptions({
             </Card>
             <Card class="sm:col-span-1 lg:col-span-3">
                 <CardHeader class="pb-2">
-                    <CardTitle class="flex items-center gap-2 text-sm font-medium">
+                    <CardTitle
+                        class="flex items-center gap-2 text-sm font-medium"
+                    >
                         <BarChart3 class="size-4 text-muted-foreground" />
                         Destination
                     </CardTitle>
@@ -139,26 +147,35 @@ defineOptions({
         <Card>
             <CardHeader>
                 <CardTitle class="text-base">Clicks by day</CardTitle>
-                <CardDescription>Last 30 days, aggregated in the database</CardDescription>
+                <CardDescription
+                    >Last 30 days, aggregated in the database</CardDescription
+                >
             </CardHeader>
-            <CardContent class="overflow-x-auto">
+            <CardContent class="space-y-6 overflow-x-auto">
+                <LinkClicksDayChart :days="analytics.clicks_by_day" />
                 <table class="w-full min-w-[320px] text-left text-sm">
                     <thead
                         class="border-b border-sidebar-border/70 text-muted-foreground dark:border-sidebar-border"
                     >
                         <tr>
                             <th class="py-2 pr-4 font-medium">Date</th>
-                            <th class="py-2 pr-4 text-right font-medium">Clicks</th>
+                            <th class="py-2 pr-4 text-right font-medium">
+                                Clicks
+                            </th>
                             <th class="py-2 font-medium">Share</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr
-                            v-for="row in analytics.clicks_by_day.filter((d) => d.count > 0)"
+                            v-for="row in analytics.clicks_by_day.filter(
+                                (d) => d.count > 0,
+                            )"
                             :key="row.date"
                             class="border-b border-sidebar-border/40 last:border-0 dark:border-sidebar-border/60"
                         >
-                            <td class="py-2 pr-4 tabular-nums text-muted-foreground">
+                            <td
+                                class="py-2 pr-4 text-muted-foreground tabular-nums"
+                            >
                                 {{ formatDayLabel(row.date) }}
                             </td>
                             <td class="py-2 pr-4 text-right tabular-nums">
@@ -192,23 +209,31 @@ defineOptions({
         </Card>
 
         <div class="grid gap-4 lg:grid-cols-3">
-            <Card v-for="block in [
-                { title: 'Device', rows: analytics.by_device },
-                { title: 'Browser', rows: analytics.by_browser },
-                { title: 'Operating system', rows: analytics.by_os },
-            ]" :key="block.title">
+            <Card
+                v-for="block in [
+                    { title: 'Device', rows: analytics.by_device },
+                    { title: 'Browser', rows: analytics.by_browser },
+                    { title: 'Operating system', rows: analytics.by_os },
+                ]"
+                :key="block.title"
+            >
                 <CardHeader>
                     <CardTitle class="text-base">{{ block.title }}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent class="space-y-4">
+                    <LinkBreakdownDonutChart :rows="block.rows" />
                     <table class="w-full text-left text-sm">
                         <thead
                             class="border-b border-sidebar-border/70 text-muted-foreground dark:border-sidebar-border"
                         >
                             <tr>
-                                <th class="py-2 pr-2 font-medium">{{ block.title }}</th>
+                                <th class="py-2 pr-2 font-medium">
+                                    {{ block.title }}
+                                </th>
                                 <th class="py-2 text-right font-medium">%</th>
-                                <th class="w-px py-2 text-right font-medium">#</th>
+                                <th class="w-px py-2 text-right font-medium">
+                                    #
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -220,7 +245,9 @@ defineOptions({
                                 <td class="max-w-[140px] truncate py-2 pr-2">
                                     {{ r.label }}
                                 </td>
-                                <td class="py-2 text-right tabular-nums text-muted-foreground">
+                                <td
+                                    class="py-2 text-right text-muted-foreground tabular-nums"
+                                >
                                     {{ pct(r.count, analytics.total_clicks) }}%
                                 </td>
                                 <td class="py-2 text-right tabular-nums">
@@ -242,9 +269,16 @@ defineOptions({
         <Card v-if="hasGeo">
             <CardHeader>
                 <CardTitle class="text-base">Country</CardTitle>
-                <CardDescription>From click geo fields when present</CardDescription>
+                <CardDescription
+                    >From click geo fields when present</CardDescription
+                >
             </CardHeader>
-            <CardContent>
+            <CardContent class="space-y-4">
+                <LinkBreakdownDonutChart
+                    :rows="
+                        analytics.by_country.filter((x) => x.label !== 'Unknown')
+                    "
+                />
                 <table class="w-full max-w-md text-left text-sm">
                     <thead
                         class="border-b border-sidebar-border/70 text-muted-foreground dark:border-sidebar-border"
@@ -257,15 +291,21 @@ defineOptions({
                     </thead>
                     <tbody>
                         <tr
-                            v-for="r in analytics.by_country.filter((x) => x.label !== 'Unknown')"
+                            v-for="r in analytics.by_country.filter(
+                                (x) => x.label !== 'Unknown',
+                            )"
                             :key="r.label"
                             class="border-b border-sidebar-border/40 last:border-0 dark:border-sidebar-border/60"
                         >
                             <td class="py-2 pr-2">{{ r.label }}</td>
-                            <td class="py-2 text-right tabular-nums text-muted-foreground">
+                            <td
+                                class="py-2 text-right text-muted-foreground tabular-nums"
+                            >
                                 {{ pct(r.count, analytics.total_clicks) }}%
                             </td>
-                            <td class="py-2 text-right tabular-nums">{{ r.count }}</td>
+                            <td class="py-2 text-right tabular-nums">
+                                {{ r.count }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
