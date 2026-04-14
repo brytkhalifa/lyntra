@@ -6,6 +6,8 @@ use App\Models\BotEvent;
 use App\Models\LinkClick;
 use App\Models\ShortLink;
 use App\Models\User;
+use App\Support\ShortLinkAnalytics;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -17,6 +19,8 @@ class BotDetectionTest extends TestCase
 
     protected function tearDown(): void
     {
+        CarbonImmutable::setTestNow();
+
         Cache::flush();
 
         parent::tearDown();
@@ -37,6 +41,92 @@ class BotDetectionTest extends TestCase
 
         $this->assertSame(1, LinkClick::query()->count());
         $this->assertSame(0, BotEvent::query()->count());
+    }
+
+    public function test_human_redirect_with_robot_in_product_name_logs_clicks_not_bot_events(): void
+    {
+        ShortLink::factory()->create([
+            'slug' => 'robotname',
+            'destination_url' => 'https://example.com/rn',
+            'is_active' => true,
+        ]);
+
+        $this->withHeader('User-Agent', 'AcmeRobotBrowser/1.0 (Windows NT 10.0)')
+            ->get('/robotname')
+            ->assertRedirect('https://example.com/rn');
+
+        $this->assertSame(1, LinkClick::query()->count());
+        $this->assertSame(0, BotEvent::query()->count());
+    }
+
+    public function test_blank_user_agent_redirect_is_automated_and_persists_missing_user_agent_reason(): void
+    {
+        $link = ShortLink::factory()->create([
+            'slug' => 'noua',
+            'destination_url' => 'https://example.com/noua',
+            'is_active' => true,
+        ]);
+
+        $this->withHeader('User-Agent', '')
+            ->get('/noua')
+            ->assertRedirect('https://example.com/noua');
+
+        $this->assertSame(0, LinkClick::query()->count());
+        $this->assertSame(1, BotEvent::query()->count());
+        $this->assertDatabaseHas('bot_events', [
+            'short_link_id' => $link->id,
+            'endpoint' => 'redirect',
+            'reason' => 'missing_user_agent',
+            'user_agent' => null,
+        ]);
+    }
+
+    public function test_blank_user_agent_resolver_is_automated_and_persists_missing_user_agent_reason(): void
+    {
+        config(['app.url' => 'https://resolver-noua.test']);
+
+        $user = User::factory()->create();
+        ShortLink::factory()->for($user)->create([
+            'slug' => 'rnoua',
+            'destination_url' => 'https://dest.example/rnoua',
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->withHeader('User-Agent', '')
+            ->postJson(route('links.expand.submit'), [
+                'url' => 'https://resolver-noua.test/rnoua',
+            ])
+            ->assertOk()
+            ->assertJsonPath('was_internal', true);
+
+        $this->assertSame(0, LinkClick::query()->count());
+        $this->assertSame(1, BotEvent::query()->count());
+        $this->assertDatabaseHas('bot_events', [
+            'endpoint' => 'resolver',
+            'reason' => 'missing_user_agent',
+            'user_agent' => null,
+        ]);
+    }
+
+    public function test_filtered_bot_events_last_30_days_includes_window_start_and_excludes_just_before(): void
+    {
+        CarbonImmutable::setTestNow(CarbonImmutable::parse('2026-04-14 12:00:00', 'UTC'));
+
+        $link = ShortLink::factory()->create();
+        $windowStart = CarbonImmutable::now()->subDays(29)->startOfDay();
+
+        BotEvent::factory()->create([
+            'short_link_id' => $link->id,
+            'created_at' => $windowStart,
+        ]);
+
+        BotEvent::factory()->create([
+            'short_link_id' => $link->id,
+            'created_at' => $windowStart->subSecond(),
+        ]);
+
+        $this->assertSame(1, ShortLinkAnalytics::filteredBotEventsLast30Days($link->id));
     }
 
     public function test_known_bot_redirect_creates_bot_events_and_not_link_clicks(): void

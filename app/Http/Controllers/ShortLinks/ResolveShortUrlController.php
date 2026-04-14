@@ -62,7 +62,7 @@ class ResolveShortUrlController extends Controller
                 $request,
                 ShortUrlResolver::firstInternalShortLinkIdFromInputUrl($inputUrl),
                 'resolver',
-                BotTrafficClassifier::automatedReasonCode(),
+                BotTrafficClassifier::automatedReasonCode($request),
                 action: 'resolve_url',
             );
         }

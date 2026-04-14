@@ -59,7 +59,7 @@ class RedirectShortLinkController extends Controller
                 $request,
                 $link->id,
                 'redirect',
-                BotTrafficClassifier::automatedReasonCode(),
+                BotTrafficClassifier::automatedReasonCode($request),
                 action: 'follow_short_url',
             );
         } else {

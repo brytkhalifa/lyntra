@@ -10,6 +10,9 @@ return [
     | When any of these appear in the lowercased User-Agent, the request is
     | treated as likely automated for redirect/resolver analytics split.
     |
+    | Intentionally excludes a bare "bot" substring match: it produces too many
+    | false positives (e.g. "robot", product names). Use explicit crawler names.
+    |
     */
     'ua_substrings' => [
         'googlebot',
@@ -49,7 +52,6 @@ return [
         'selenium',
         'lighthouse',
         'preview',
-        'bot',
     ],
 
     'redirect' => [

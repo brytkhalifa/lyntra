@@ -40,9 +40,17 @@ final class BotTrafficClassifier
 
     /**
      * Stable reason code for persistence and dashboards.
+     *
+     * Only meaningful when {@see self::isLikelyAutomated()} is true for the same request.
      */
-    public static function automatedReasonCode(): string
+    public static function automatedReasonCode(Request $request): string
     {
+        $ua = (string) $request->userAgent();
+
+        if (trim($ua) === '') {
+            return 'missing_user_agent';
+        }
+
         return 'known_bot_signature';
     }
 }

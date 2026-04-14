@@ -152,7 +152,7 @@ defineOptions({
                             {{ summary.total_clicks }}
                         </p>
                         <p class="mt-2 text-xs text-muted-foreground">
-                            Filtered automated hits (30 days, known links):
+                            Filtered automated hits on your short links (last 30 days):
                             <span class="font-medium text-foreground tabular-nums">{{
                                 summary.filtered_bot_events_30d
                             }}</span>
