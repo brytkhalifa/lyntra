@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\BotEvent;
 use App\Models\LinkClick;
 use App\Models\ShortLink;
 use App\Models\User;
@@ -16,6 +17,7 @@ final class AccountShortLinkAnalytics
      *     total_clicks: int,
      *     clicks_last_30_days: int,
      *     active_links: int,
+     *     filtered_bot_events_30d: int,
      * }
      */
     public static function summary(User $user): array
@@ -47,11 +49,19 @@ final class AccountShortLinkAnalytics
             })
             ->count();
 
+        $filteredBotEvents30d = BotEvent::query()
+            ->join('short_links', 'bot_events.short_link_id', '=', 'short_links.id')
+            ->where('short_links.user_id', $userId)
+            ->whereNotNull('bot_events.short_link_id')
+            ->where('bot_events.created_at', '>=', $clicksWindowStart)
+            ->count();
+
         return [
             'total_links' => $totalLinks,
             'total_clicks' => $totalClicks,
             'clicks_last_30_days' => $clicksLast30Days,
             'active_links' => $activeLinks,
+            'filtered_bot_events_30d' => $filteredBotEvents30d,
         ];
     }
 

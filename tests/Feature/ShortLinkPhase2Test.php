@@ -32,6 +32,7 @@ class ShortLinkPhase2Test extends TestCase
             ->component('Links/Show')
             ->where('shortLink.slug', 'stats')
             ->where('analytics.total_clicks', 2)
+            ->where('analytics.filtered_bot_events_30d', 0)
             ->has('analytics.clicks_by_day')
             ->has('analytics.by_device', 1)
             ->has('analytics.by_browser', 1)
@@ -80,6 +81,7 @@ class ShortLinkPhase2Test extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Links/Show')
                 ->where('analytics.total_clicks', 1)
+                ->where('analytics.filtered_bot_events_30d', 0)
                 ->has('analytics.clicks_by_day', fn (Assert $day) => $day
                     ->etc(),
                 ),

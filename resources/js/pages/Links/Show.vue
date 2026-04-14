@@ -32,6 +32,7 @@ type DayRow = { date: string; count: number };
 
 type Analytics = {
     total_clicks: number;
+    filtered_bot_events_30d: number;
     clicks_by_day: DayRow[];
     by_device: CountRow[];
     by_browser: CountRow[];
@@ -130,6 +131,12 @@ defineOptions({
                 <CardContent>
                     <p class="text-3xl font-semibold tabular-nums">
                         {{ analytics.total_clicks }}
+                    </p>
+                    <p class="mt-2 text-xs text-muted-foreground">
+                        Filtered automated hits (30 days):
+                        <span class="font-medium text-foreground tabular-nums">{{
+                            analytics.filtered_bot_events_30d
+                        }}</span>
                     </p>
                 </CardContent>
             </Card>

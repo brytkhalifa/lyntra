@@ -237,4 +237,34 @@ final class ShortUrlResolver
 
         return (string) UriResolver::resolve($base, $target);
     }
+
+    /**
+     * When the given URL is a single-segment internal short URL for this app,
+     * return the matching short link primary key; otherwise null.
+     */
+    public static function firstInternalShortLinkIdFromInputUrl(string $inputUrl): ?int
+    {
+        $current = trim($inputUrl);
+        $parts = parse_url($current);
+        if ($parts === false || ! isset($parts['scheme'], $parts['host'])) {
+            return null;
+        }
+
+        if (! self::isInternalAppShortUrl($parts)) {
+            return null;
+        }
+
+        $path = $parts['path'] ?? '/';
+        $path = $path === '' ? '/' : $path;
+        if (! preg_match('#^/([^/]+)/?$#', $path, $m)) {
+            return null;
+        }
+
+        $slug = mb_strtolower($m[1]);
+        if (ReservedSlugs::contains($slug)) {
+            return null;
+        }
+
+        return ShortLink::query()->where('slug', $slug)->value('id');
+    }
 }

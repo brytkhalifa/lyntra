@@ -33,6 +33,7 @@ type Summary = {
     total_clicks: number;
     clicks_last_30_days: number;
     active_links: number;
+    filtered_bot_events_30d: number;
 };
 
 type LinkRow = {
@@ -149,6 +150,12 @@ defineOptions({
                     <CardContent>
                         <p class="text-3xl font-semibold tabular-nums">
                             {{ summary.total_clicks }}
+                        </p>
+                        <p class="mt-2 text-xs text-muted-foreground">
+                            Filtered automated hits (30 days, known links):
+                            <span class="font-medium text-foreground tabular-nums">{{
+                                summary.filtered_bot_events_30d
+                            }}</span>
                         </p>
                     </CardContent>
                 </Card>

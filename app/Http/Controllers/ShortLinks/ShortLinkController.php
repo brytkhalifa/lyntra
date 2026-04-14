@@ -67,6 +67,7 @@ class ShortLinkController extends Controller
             ],
             'analytics' => [
                 'total_clicks' => ShortLinkAnalytics::totalClicks($link->id),
+                'filtered_bot_events_30d' => ShortLinkAnalytics::filteredBotEventsLast30Days($link->id),
                 'clicks_by_day' => ShortLinkAnalytics::clicksByDay($link->id, 30),
                 'by_device' => ShortLinkAnalytics::breakdown($link->id, 'device_type'),
                 'by_browser' => ShortLinkAnalytics::breakdown($link->id, 'browser'),

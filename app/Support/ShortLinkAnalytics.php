@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\BotEvent;
 use App\Models\LinkClick;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,16 @@ final class ShortLinkAnalytics
     public static function totalClicks(int $shortLinkId): int
     {
         return LinkClick::query()->where('short_link_id', $shortLinkId)->count();
+    }
+
+    public static function filteredBotEventsLast30Days(int $shortLinkId): int
+    {
+        $windowStart = CarbonImmutable::now()->subDays(29)->startOfDay();
+
+        return BotEvent::query()
+            ->where('short_link_id', $shortLinkId)
+            ->where('created_at', '>=', $windowStart)
+            ->count();
     }
 
     /**
@@ -29,7 +40,6 @@ final class ShortLinkAnalytics
             'mysql' => 'DATE(link_clicks.created_at)',
             default => 'DATE(link_clicks.created_at)',
         };
-
 
         $start = CarbonImmutable::now()->subDays($days - 1)->startOfDay();
 

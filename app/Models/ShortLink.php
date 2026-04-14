@@ -57,4 +57,12 @@ class ShortLink extends Model
     {
         return $this->hasMany(LinkClick::class);
     }
+
+    /**
+     * @return HasMany<BotEvent, $this>
+     */
+    public function botEvents(): HasMany
+    {
+        return $this->hasMany(BotEvent::class);
+    }
 }

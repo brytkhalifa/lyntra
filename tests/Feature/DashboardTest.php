@@ -34,6 +34,7 @@ class DashboardTest extends TestCase
             ->where('summary.total_clicks', 0)
             ->where('summary.clicks_last_30_days', 0)
             ->where('summary.active_links', 0)
+            ->where('summary.filtered_bot_events_30d', 0)
             ->has('clicks_by_day', 30)
             ->has('top_links', 0)
             ->has('recent_links', 0),
@@ -63,6 +64,7 @@ class DashboardTest extends TestCase
                 ->where('summary.total_links', 2)
                 ->where('summary.total_clicks', 5)
                 ->where('summary.active_links', 2)
+                ->where('summary.filtered_bot_events_30d', 0)
                 ->has('clicks_by_day', 30)
                 ->has('top_links', 2)
                 ->where('top_links.0.slug', 'mine-a')
