@@ -90,76 +90,123 @@
 }
 
 :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
+    --brand-azure-hsl: 207 89% 55%;
+    --brand-cobalt-hsl: 220 84% 58%;
+    --brand-violet-hsl: 265 79% 61%;
+    --brand-cyan-hsl: 191 76% 84%;
+    --background: hsl(198 60% 97%);
+    --foreground: hsl(237 44% 16%);
     --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
+    --card-foreground: hsl(237 44% 16%);
     --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 45.1%);
-    --accent: hsl(0 0% 96.1%);
-    --accent-foreground: hsl(0 0% 9%);
+    --popover-foreground: hsl(237 44% 16%);
+    --primary: hsl(207 89% 55%);
+    --primary-foreground: hsl(0 0% 100%);
+    --secondary: hsl(212 100% 95%);
+    --secondary-foreground: hsl(237 36% 24%);
+    --muted: hsl(198 62% 93%);
+    --muted-foreground: hsl(229 17% 46%);
+    --accent: hsl(245 100% 95%);
+    --accent-foreground: hsl(249 45% 38%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(0 0% 89.8%);
-    --ring: hsl(0 0% 3.9%);
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
+    --border: hsl(223 43% 88%);
+    --input: hsl(214 68% 91%);
+    --ring: hsl(207 89% 55%);
+    --chart-1: hsl(207 89% 55%);
+    --chart-2: hsl(241 74% 61%);
+    --chart-3: hsl(220 84% 58%);
+    --chart-4: hsl(212 86% 74%);
+    --chart-5: hsl(191 76% 84%);
     --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --sidebar-background: hsl(210 71% 95%);
+    --sidebar-foreground: hsl(237 34% 22%);
+    --sidebar-primary: hsl(207 89% 55%);
+    --sidebar-primary-foreground: hsl(0 0% 100%);
+    --sidebar-accent: hsl(243 90% 94%);
+    --sidebar-accent-foreground: hsl(246 42% 36%);
+    --sidebar-border: hsl(223 40% 87%);
+    --sidebar-ring: hsl(207 89% 55%);
+    --sidebar: hsl(210 71% 95%);
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(0 0% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 9%);
-    --secondary: hsl(0 0% 14.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
-    --accent: hsl(0 0% 14.9%);
-    --accent-foreground: hsl(0 0% 98%);
+    --brand-azure-hsl: 207 92% 56%;
+    --brand-cobalt-hsl: 220 91% 60%;
+    --brand-violet-hsl: 265 79% 61%;
+    --brand-cyan-hsl: 191 79% 82%;
+    --background: hsl(247 57% 12%);
+    --foreground: hsl(210 40% 98%);
+    --card: hsl(239 46% 16%);
+    --card-foreground: hsl(210 40% 98%);
+    --popover: hsl(239 46% 16%);
+    --popover-foreground: hsl(210 40% 98%);
+    --primary: hsl(207 92% 56%);
+    --primary-foreground: hsl(0 0% 100%);
+    --secondary: hsl(243 38% 22%);
+    --secondary-foreground: hsl(210 40% 96%);
+    --muted: hsl(240 33% 19%);
+    --muted-foreground: hsl(219 18% 68%);
+    --accent: hsl(251 42% 25%);
+    --accent-foreground: hsl(210 40% 96%);
     --destructive: hsl(0 84% 60%);
     --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 14.9%);
-    --input: hsl(0 0% 14.9%);
-    --ring: hsl(0 0% 83.1%);
-    --chart-1: hsl(220 70% 50%);
-    --chart-2: hsl(160 60% 45%);
-    --chart-3: hsl(30 80% 55%);
-    --chart-4: hsl(280 65% 60%);
-    --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
-    --sidebar-primary: hsl(360, 100%, 100%);
+    --border: hsl(241 29% 24%);
+    --input: hsl(241 29% 24%);
+    --ring: hsl(207 92% 56%);
+    --chart-1: hsl(207 92% 56%);
+    --chart-2: hsl(244 81% 65%);
+    --chart-3: hsl(220 91% 60%);
+    --chart-4: hsl(210 90% 72%);
+    --chart-5: hsl(191 79% 82%);
+    --sidebar-background: hsl(243 52% 14%);
+    --sidebar-foreground: hsl(210 40% 96%);
+    --sidebar-primary: hsl(207 92% 56%);
     --sidebar-primary-foreground: hsl(0 0% 100%);
-    --sidebar-accent: hsl(0 0% 15.9%);
-    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-    --sidebar-border: hsl(0 0% 15.9%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(240 5.9% 10%);
+    --sidebar-accent: hsl(247 35% 22%);
+    --sidebar-accent-foreground: hsl(210 40% 94%);
+    --sidebar-border: hsl(243 28% 24%);
+    --sidebar-ring: hsl(207 92% 56%);
+    --sidebar: hsl(243 52% 14%);
+}
+
+/* Decorative mesh: used on the marketing landing hero background */
+.landing-page-mesh {
+    background:
+        radial-gradient(
+            ellipse 80% 55% at 14% -10%,
+            hsl(var(--brand-violet-hsl) / 0.18),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse 78% 52% at 86% -8%,
+            hsl(var(--brand-azure-hsl) / 0.16),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse 58% 44% at 50% 100%,
+            hsl(var(--brand-cyan-hsl) / 0.16),
+            transparent 50%
+        );
+}
+
+.dark .landing-page-mesh {
+    background:
+        radial-gradient(
+            ellipse 80% 55% at 10% -8%,
+            hsl(var(--brand-violet-hsl) / 0.28),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse 78% 52% at 90% -4%,
+            hsl(var(--brand-azure-hsl) / 0.24),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse 58% 44% at 50% 100%,
+            hsl(var(--brand-cobalt-hsl) / 0.18),
+            transparent 50%
+        );
 }
 
 @layer base {

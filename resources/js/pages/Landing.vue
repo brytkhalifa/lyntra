@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dashboard, login, register } from '@/routes';
 import { create as linksCreate, expand as linksExpand } from '@/routes/links';
+import AppLogoIcon from '@/components/AppLogoIcon.vue';
 
 const destinationUrlPlaceholder =
     'https://example.com/blog/announcements/q2-roadmap';
@@ -28,6 +29,7 @@ const draftDestinationUrl = ref('');
 
 function createLinkHref(): string {
     const trimmed = draftDestinationUrl.value.trim();
+
     if (trimmed === '') {
         return linksCreate.url();
     }
@@ -58,25 +60,23 @@ withDefaults(
         />
     </Head>
 
-    <div
-        class="relative flex min-h-screen flex-col bg-background text-foreground"
-    >
+    <div class="relative flex min-h-screen flex-col bg-background text-foreground">
         <div
-            class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/0.08,transparent)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/0.14,transparent)]"
+            class="landing-page-mesh pointer-events-none absolute inset-0 -z-10"
             aria-hidden="true"
         />
 
         <header
-            class="border-b border-border/60 bg-background/80 backdrop-blur-md"
+            class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:duration-300 border-b border-border/60 bg-background/80 backdrop-blur-md"
         >
             <div
                 class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
             >
                 <div class="flex items-center gap-2">
                     <div
-                        class="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"
+                        class="flex size-9 items-center justify-center rounded-lg border border-white/10 bg-[linear-gradient(145deg,hsl(var(--brand-violet-hsl)/0.95),hsl(var(--brand-cobalt-hsl)/0.92),hsl(var(--brand-azure-hsl)/0.9))] text-primary-foreground shadow-sm"
                     >
-                        <Link2 class="size-4" aria-hidden="true" />
+                        <AppLogoIcon class="size-4" aria-hidden="true" />
                     </div>
                     <span class="text-lg font-semibold tracking-tight">
                         Lyntra
@@ -114,24 +114,31 @@ withDefaults(
             >
                 <div class="flex-1 space-y-6">
                     <p
-                        class="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground"
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both motion-safe:duration-500 inline-flex items-center gap-2 rounded-full border border-[hsl(var(--brand-violet-hsl)/0.18)] bg-[linear-gradient(135deg,hsl(var(--brand-violet-hsl)/0.12),hsl(var(--brand-azure-hsl)/0.08),hsl(var(--brand-cyan-hsl)/0.18))] px-3 py-1 text-xs font-medium text-muted-foreground"
                     >
                         <Sparkles class="size-3.5" aria-hidden="true" />
                         Built for teams who care where traffic goes
                     </p>
                     <h1
-                        class="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both motion-safe:delay-75 motion-safe:duration-500 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
                     >
-                        Short links you can trust, measure, and share.
+                        Short links you can
+                        <span
+                            class="bg-[linear-gradient(135deg,hsl(var(--brand-violet-hsl)),hsl(var(--brand-cobalt-hsl)),hsl(var(--brand-azure-hsl)),hsl(var(--brand-cyan-hsl)))] bg-clip-text text-transparent"
+                        >
+                            trust, measure, and share.
+                        </span>
                     </h1>
                     <p
-                        class="max-w-xl text-pretty text-lg text-muted-foreground"
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both motion-safe:delay-100 motion-safe:duration-500 max-w-xl text-pretty text-lg text-muted-foreground"
                     >
                         Turn long URLs into clean slugs on your domain, watch
                         clicks over time, and use expand preview when you need
                         to verify a destination before it is opened.
                     </p>
-                    <div class="flex flex-wrap gap-3">
+                    <div
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both motion-safe:delay-150 motion-safe:duration-500 flex flex-wrap gap-3"
+                    >
                         <template v-if="$page.props.auth.user">
                             <Button size="lg" as-child>
                                 <Link :href="dashboard()">
@@ -169,7 +176,7 @@ withDefaults(
                 </div>
                 <div class="flex flex-1 justify-center lg:justify-end">
                     <div
-                        class="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-lg"
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 motion-safe:zoom-in-95 motion-safe:fill-mode-both motion-safe:delay-200 motion-safe:duration-500 w-full max-w-md rounded-2xl border border-[hsl(var(--brand-violet-hsl)/0.16)] bg-[linear-gradient(155deg,hsl(var(--brand-violet-hsl)/0.08),hsl(var(--brand-azure-hsl)/0.05),hsl(var(--brand-cyan-hsl)/0.12))] p-6 shadow-lg"
                     >
                         <form
                             class="space-y-4"
@@ -201,7 +208,9 @@ withDefaults(
                         <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             Your short link could look like
                         </p>
-                        <p class="mt-3 break-all font-mono text-base font-medium text-primary">
+                        <p
+                            class="mt-3 break-all bg-[linear-gradient(135deg,hsl(var(--brand-violet-hsl)),hsl(var(--brand-cobalt-hsl)),hsl(var(--brand-azure-hsl)))] bg-clip-text font-mono text-base font-semibold text-transparent"
+                        >
                             lyntra.com/qjklske
                         </p>
                         <p class="mt-4 text-sm text-muted-foreground">
@@ -217,9 +226,16 @@ withDefaults(
                 class="border-t border-border/60 bg-muted/30 py-16 sm:py-20"
             >
                 <div class="mx-auto max-w-6xl px-4 sm:px-6">
-                    <div class="mx-auto max-w-2xl text-center">
+                    <div
+                        class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:duration-500 mx-auto max-w-2xl text-center"
+                    >
                         <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-                            Everything you need around the link
+                            Everything you need around the
+                            <span
+                                class="bg-[linear-gradient(135deg,hsl(var(--brand-violet-hsl)),hsl(var(--brand-azure-hsl)),hsl(var(--brand-cyan-hsl)))] bg-clip-text text-transparent"
+                            >
+                                link
+                            </span>
                         </h2>
                         <p class="mt-3 text-muted-foreground">
                             Practical tools for creating, distributing, and
@@ -229,10 +245,12 @@ withDefaults(
                     <div
                         class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
                     >
-                        <Card class="border-border/80 shadow-xs">
+                        <Card
+                            class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:duration-500 border-border/80 bg-[linear-gradient(180deg,hsl(var(--brand-azure-hsl)/0.04),transparent_45%)] shadow-xs transition-shadow transition-colors duration-200 hover:border-primary/25 hover:shadow-md"
+                        >
                             <CardHeader class="space-y-3">
                                 <div
-                                    class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                                    class="flex size-10 items-center justify-center rounded-lg bg-[linear-gradient(145deg,hsl(var(--brand-violet-hsl)/0.18),hsl(var(--brand-azure-hsl)/0.16))] text-primary"
                                 >
                                     <Link2 class="size-5" aria-hidden="true" />
                                 </div>
@@ -245,10 +263,12 @@ withDefaults(
                                 </CardDescription>
                             </CardHeader>
                         </Card>
-                        <Card class="border-border/80 shadow-xs">
+                        <Card
+                            class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:delay-75 motion-safe:duration-500 border-border/80 bg-[linear-gradient(180deg,hsl(var(--brand-violet-hsl)/0.05),transparent_45%)] shadow-xs transition-shadow transition-colors duration-200 hover:border-primary/25 hover:shadow-md"
+                        >
                             <CardHeader class="space-y-3">
                                 <div
-                                    class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                                    class="flex size-10 items-center justify-center rounded-lg bg-[linear-gradient(145deg,hsl(var(--brand-violet-hsl)/0.22),hsl(var(--brand-cobalt-hsl)/0.16))] text-[hsl(var(--brand-violet-hsl))]"
                                 >
                                     <BarChart3
                                         class="size-5"
@@ -264,10 +284,12 @@ withDefaults(
                                 </CardDescription>
                             </CardHeader>
                         </Card>
-                        <Card class="border-border/80 shadow-xs">
+                        <Card
+                            class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:delay-100 motion-safe:duration-500 border-border/80 bg-[linear-gradient(180deg,hsl(var(--brand-cyan-hsl)/0.12),transparent_45%)] shadow-xs transition-shadow transition-colors duration-200 hover:border-primary/25 hover:shadow-md"
+                        >
                             <CardHeader class="space-y-3">
                                 <div
-                                    class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                                    class="flex size-10 items-center justify-center rounded-lg bg-[linear-gradient(145deg,hsl(var(--brand-cyan-hsl)/0.35),hsl(var(--brand-azure-hsl)/0.14))] text-[hsl(var(--brand-azure-hsl))]"
                                 >
                                     <QrCode
                                         class="size-5"
@@ -283,10 +305,12 @@ withDefaults(
                                 </CardDescription>
                             </CardHeader>
                         </Card>
-                        <Card class="border-border/80 shadow-xs">
+                        <Card
+                            class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:delay-125 motion-safe:duration-500 border-border/80 bg-[linear-gradient(180deg,hsl(var(--brand-cobalt-hsl)/0.06),transparent_45%)] shadow-xs transition-shadow transition-colors duration-200 hover:border-primary/25 hover:shadow-md"
+                        >
                             <CardHeader class="space-y-3">
                                 <div
-                                    class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                                    class="flex size-10 items-center justify-center rounded-lg bg-[linear-gradient(145deg,hsl(var(--brand-cobalt-hsl)/0.2),hsl(var(--brand-violet-hsl)/0.14))] text-[hsl(var(--brand-cobalt-hsl))]"
                                 >
                                     <UnfoldVertical
                                         class="size-5"
@@ -308,11 +332,11 @@ withDefaults(
 
             <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
                 <div
-                    class="flex flex-col items-start gap-6 rounded-2xl border border-border bg-card p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-10"
+                    class="motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:fill-mode-both motion-safe:delay-100 motion-safe:duration-500 flex flex-col items-start gap-6 rounded-2xl border border-[hsl(var(--brand-violet-hsl)/0.14)] bg-[linear-gradient(135deg,hsl(var(--brand-violet-hsl)/0.08),hsl(var(--brand-azure-hsl)/0.05),hsl(var(--brand-cyan-hsl)/0.12))] p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-10"
                 >
                     <div class="flex gap-4">
                         <div
-                            class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground"
+                            class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(145deg,hsl(var(--brand-violet-hsl)/0.18),hsl(var(--brand-cyan-hsl)/0.22))] text-[hsl(var(--brand-cobalt-hsl))]"
                         >
                             <ShieldCheck class="size-6" aria-hidden="true" />
                         </div>
